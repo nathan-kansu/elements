@@ -6,13 +6,14 @@ import { Header } from "react-native-elements";
 
 export default function App() {
   const [pageTitle, setPageTitle] = useState("Home");
-  const handleStateChange = ({ index, routes }) => {
+
+  const handleNavigationChange = ({ index, routes }) => {
     const { name } = routes[index];
     setPageTitle(name);
   };
 
   return (
-    <NavigationContainer onStateChange={handleStateChange}>
+    <NavigationContainer onStateChange={handleNavigationChange}>
       <Header
         centerComponent={{ text: pageTitle, style: { color: "#fff" } }}
         rightComponent={{ icon: "menu", color: "#fff" }}
