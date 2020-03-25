@@ -1,20 +1,33 @@
-import React from "react";
-import { Tile, Text, Button } from "react-native-elements";
+import React, { useEffect, useState } from "react";
+import { useWindowDimensions, ScrollView } from "react-native";
+import { Tile } from "react-native-elements";
+import axios from "axios";
 
-export default ({ navigation }) => (
-  <>
-    <Tile
-      title="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores dolore exercitationem"
-      featured
-      imageSrc={{ uri: "http://placekitten.com/200/300" }}
-      caption="Some Caption Text"
-    />
-    <Text>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi ut similique
-      mollitia consequatur laboriosam natus animi, vel aliquid sequi cum
-      architecto ratione, commodi expedita dignissimos sed, a consequuntur
-      eligendi. Soluta.
-    </Text>
-    <Button onPress={() => navigation.navigate("Test")} title="Hey!" />
-  </>
-);
+export default () => {
+  const [feed, setFeed] = useState([]);
+  const { width, height } = useWindowDimensions();
+
+  const fetchFeed = async () => {
+    const { data } = await axios.get("https://reactnative.dev/movies.json");
+    const { movies } = data;
+    console.log({ width, height });
+    setFeed(movies);
+  };
+
+  useEffect(() => {
+    fetchFeed();
+  }, []);
+
+  return (
+    <ScrollView>
+      {feed.map(({ id, releaseYear, title }) => (
+        <Tile
+          caption={releaseYear}
+          key={id}
+          imageSrc={{ uri: `http://placekitten.com/${width * 2}/${width * 2}` }}
+          title={title}
+        />
+      ))}
+    </ScrollView>
+  );
+};
