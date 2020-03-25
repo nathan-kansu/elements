@@ -1,27 +1,23 @@
 import "react-native-gesture-handler";
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import Home from "./components/Home";
-import Test from "./components/Test";
-import { Header, ThemeProvider } from "react-native-elements";
-
-const Stack = createStackNavigator();
+import Tabs from "./components/Tabs";
+import { Header } from "react-native-elements";
 
 export default function App() {
+  const [pageTitle, setPageTitle] = useState("Home");
+  const handleStateChange = ({ index, routes }) => {
+    const { name } = routes[index];
+    setPageTitle(name);
+  };
+
   return (
-    <NavigationContainer>
-      <ThemeProvider>
-        <Header
-          leftComponent={{ icon: "menu", color: "#fff" }}
-          centerComponent={{ text: "MY TITLE", style: { color: "#fff" } }}
-          rightComponent={{ icon: "home", color: "#fff" }}
-        />
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Test" component={Test} />
-        </Stack.Navigator>
-      </ThemeProvider>
+    <NavigationContainer onStateChange={handleStateChange}>
+      <Header
+        centerComponent={{ text: pageTitle, style: { color: "#fff" } }}
+        rightComponent={{ icon: "menu", color: "#fff" }}
+      />
+      <Tabs />
     </NavigationContainer>
   );
 }
