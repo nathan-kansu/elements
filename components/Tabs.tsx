@@ -28,8 +28,8 @@ const MyTabs = () => {
       })}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Profile" component={Profile} />
       <Tab.Screen name="Favourites" component={Favourites} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };
