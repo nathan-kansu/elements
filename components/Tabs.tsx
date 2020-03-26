@@ -22,7 +22,6 @@ const MyTabs = () => {
             iconName = "ios-heart";
           }
 
-          // You can return any component that you like here!
           return <Ionicons name={iconName} size={size} color={color} />;
         }
       })}
