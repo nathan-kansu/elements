@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useWindowDimensions, ScrollView, StyleSheet } from "react-native";
+import {
+  useWindowDimensions,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView
+} from "react-native";
 import { Tile } from "react-native-elements";
-import axios from "axios";
+import api from "../services/api";
 
 export default () => {
   const [feed, setFeed] = useState([]);
@@ -11,9 +16,8 @@ export default () => {
   }, []);
 
   const fetchFeed = async () => {
-    const { data } = await axios.get("https://reactnative.dev/movies.json");
-    const { movies } = data;
-    setFeed(movies);
+    const { data } = await api.get("photos/random", { params: { count: 10 } });
+    setFeed(data);
   };
 
   const getImageWidth = () => {
@@ -24,17 +28,19 @@ export default () => {
   const imageWidth = getImageWidth();
 
   return (
-    <ScrollView>
-      {feed.map(({ id, releaseYear, title }) => (
-        <Tile
-          caption={releaseYear}
-          key={id}
-          imageSrc={{
-            uri: `http://placekitten.com/${imageWidth}/${imageWidth}`
-          }}
-          title={title}
-        />
-      ))}
-    </ScrollView>
+    <SafeAreaView>
+      <ScrollView>
+        {feed.map(({ description, id, urls }) => (
+          <Tile
+            caption={description}
+            key={id}
+            imageSrc={{
+              uri: urls.regular
+            }}
+            title={description}
+          />
+        ))}
+      </ScrollView>
+    </SafeAreaView>
   );
 };
