@@ -5,6 +5,7 @@ import { ThemeProvider } from "react-native-elements";
 import { NavigationContainer } from "@react-navigation/native";
 import Tabs from "./components/Tabs";
 import { Header } from "react-native-elements";
+import PageTitle from "./components/PageTitle";
 
 export default function App() {
   const [pageTitle, setPageTitle] = useState("Home");
@@ -14,31 +15,14 @@ export default function App() {
     setPageTitle(name);
   };
 
-  const theme = {
-    // colors: {
-    //   primary: "white"
-    // }
-  };
-
-  const styles = StyleSheet.create({
-    container: {
-      backgroundColor: "white"
-    },
-    title: {
-      color: "black",
-      fontSize: 16,
-      fontWeight: "500",
-      letterSpacing: 1.23,
-      textTransform: "uppercase"
-    }
-  });
+  const theme = {};
 
   return (
     <NavigationContainer onStateChange={handleNavigationChange}>
       <ThemeProvider theme={theme}>
         <Header
-          centerComponent={{ text: pageTitle, style: styles.title }}
-          rightComponent={{ icon: "menu", color: "#000" }}
+          centerComponent={<PageTitle pageTitle={pageTitle} />}
+          rightComponent={{ icon: "more-vert", color: "#000" }}
           containerStyle={styles.container}
         />
         <Tabs />
@@ -46,3 +30,11 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    borderBottomColor: "#333",
+    borderBottomWidth: 0.24
+  }
+});
