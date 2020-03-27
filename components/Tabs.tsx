@@ -9,7 +9,11 @@ const Tab = createBottomTabNavigator();
 const MyTabs = () => {
   return (
     <Tab.Navigator
-      tabBarOptions={{ showLabel: false }}
+      tabBarOptions={{
+        activeTintColor: "black",
+        inactiveTintColor: "gray",
+        showLabel: false
+      }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
           let iconName;
