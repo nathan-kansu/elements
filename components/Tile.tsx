@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
 
-export default ({ description, user, urls }) => {
+export default ({ description, handleFavoriteToggle, id, user, urls }) => {
   const getImageWidth = () => {
     const { width } = useWindowDimensions();
     return width;
@@ -34,7 +34,7 @@ export default ({ description, user, urls }) => {
     },
     favorite: {
       //   alignSelf: "flex-end"
-      backgroundColor: "#333"
+      backgroundColor: "#eee"
     },
     image: { height: imageWidth, width: imageWidth },
     textContainer: {
@@ -65,6 +65,7 @@ export default ({ description, user, urls }) => {
         </View>
         <Button
           buttonStyle={styles.favorite}
+          onPress={() => handleFavoriteToggle(id)}
           icon={
             <Icon
               name="favorite-border"
