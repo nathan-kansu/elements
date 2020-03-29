@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { ScrollView, SafeAreaView, View, Text } from "react-native";
 import Tile from "./Tile";
-import { addFavorite } from "../store/actions/favorites";
+import { favoriteAdd, favoriteRemove } from "../store/actions/favorites";
 import api from "../services/api";
-import Favourites from "./Favourites";
 
-const Home = ({ handleFavoriteToggle, favorites }) => {
+const Home = ({ addFavorite, removeFavorite, favorites }) => {
   const [feed, setFeed] = useState([]);
 
   useEffect(() => {
@@ -18,18 +17,20 @@ const Home = ({ handleFavoriteToggle, favorites }) => {
     setFeed(data);
   };
 
+  const handleFavoriteToggle = (id: string) => {
+    return isFavorite(id) ? removeFavorite(id) : addFavorite(id);
+  };
+
+  const isFavorite = (id: string) => favorites.includes(id);
+
   return (
     <SafeAreaView>
-      <View>
-        {favorites.map(favorite => (
-          <Text key={favorite}>{favorite}</Text>
-        ))}
-      </View>
       <ScrollView>
         {feed.map(post => (
           <Tile
             key={post.id}
             handleFavoriteToggle={handleFavoriteToggle}
+            isFavorite={isFavorite(post.id)}
             {...post}
           />
         ))}
@@ -46,8 +47,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleFavoriteToggle: id => {
-      dispatch(addFavorite(id));
+    addFavorite: id => {
+      dispatch(favoriteAdd(id));
+    },
+    removeFavorite: id => {
+      dispatch(favoriteRemove(id));
     }
   };
 };

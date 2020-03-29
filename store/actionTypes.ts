@@ -1,2 +1,5 @@
-export const ADD_FAVORITE = "ADD_FAVORITE";
-export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
+export const FAVORITE_ADD = "FAVORITE_ADD";
+export const FAVORITE_REMOVE = "FAVORITE_REMOVE";
+export const FEED_REQUEST = "FEED_REQUEST";
+export const FEED_SUCCESS = "FEED_SUCCESS";
+export const FEED_ERROR = "FEED_ERROR";

@@ -8,7 +8,14 @@ import {
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
 
-export default ({ description, handleFavoriteToggle, id, user, urls }) => {
+export default ({
+  description,
+  handleFavoriteToggle,
+  id,
+  isFavorite,
+  user,
+  urls
+}) => {
   const getImageWidth = () => {
     const { width } = useWindowDimensions();
     return width;
@@ -68,7 +75,7 @@ export default ({ description, handleFavoriteToggle, id, user, urls }) => {
           onPress={() => handleFavoriteToggle(id)}
           icon={
             <Icon
-              name="favorite-border"
+              name={isFavorite ? "favorite" : "favorite-border"}
               //   size={15}
               //   color="white"
             />

@@ -1,12 +1,12 @@
-import { ADD_FAVORITE, REMOVE_FAVORITE } from "../actionTypes";
+import { FAVORITE_ADD, FAVORITE_REMOVE } from "../actionTypes";
 const initialState = [];
 
 const favorites = (state = initialState, { type, payload }) => {
   switch (type) {
-    case ADD_FAVORITE:
+    case FAVORITE_ADD:
       return [...state, payload];
-    case REMOVE_FAVORITE:
-      return [...state.filter(payload)];
+    case FAVORITE_REMOVE:
+      return state.filter(id => id !== payload);
     default:
       return state;
   }
