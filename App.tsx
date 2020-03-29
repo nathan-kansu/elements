@@ -6,6 +6,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import Tabs from "./components/Tabs";
 import { Header } from "react-native-elements";
 import PageTitle from "./components/PageTitle";
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { store, persistor } from "./store";
 
 export default function App() {
   const [pageTitle, setPageTitle] = useState("Home");
@@ -20,12 +23,16 @@ export default function App() {
   return (
     <NavigationContainer onStateChange={handleNavigationChange}>
       <ThemeProvider theme={theme}>
-        <Header
-          centerComponent={<PageTitle pageTitle={pageTitle} />}
-          rightComponent={{ icon: "more-vert", color: "#000" }}
-          containerStyle={styles.container}
-        />
-        <Tabs />
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <Header
+              centerComponent={<PageTitle pageTitle={pageTitle} />}
+              rightComponent={{ icon: "more-vert", color: "#000" }}
+              containerStyle={styles.container}
+            />
+            <Tabs />
+          </PersistGate>
+        </Provider>
       </ThemeProvider>
     </NavigationContainer>
   );
