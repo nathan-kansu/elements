@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { ScrollView, SafeAreaView, View, Text } from "react-native";
 import Tile from "./Tile";
 import { favoriteAdd, favoriteRemove } from "../store/actions/favorites";
-import api from "../services/api";
+import api from "../api";
 
 const Home = ({ addFavorite, removeFavorite, favorites }) => {
   const [feed, setFeed] = useState([]);
