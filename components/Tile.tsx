@@ -37,7 +37,8 @@ export default ({
     description: {
       fontSize: 15,
       fontWeight: "bold",
-      marginBottom: 2
+      marginBottom: 2,
+      marginRight: 2
     },
     favorite: {
       //   alignSelf: "flex-end"
@@ -65,7 +66,7 @@ export default ({
       />
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.description}>
+          <Text numberOfLines={1} style={styles.description}>
             {description || "lorem ipsum yo"}
           </Text>
           <Text style={styles.user}>{user.name}</Text>
