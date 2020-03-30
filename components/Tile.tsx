@@ -73,13 +73,7 @@ export default ({
         <Button
           buttonStyle={styles.favorite}
           onPress={() => handleFavoriteToggle(id)}
-          icon={
-            <Icon
-              name={isFavorite ? "favorite" : "favorite-border"}
-              //   size={15}
-              //   color="white"
-            />
-          }
+          icon={<Icon name={isFavorite ? "favorite" : "favorite-border"} />}
         />
       </View>
     </>

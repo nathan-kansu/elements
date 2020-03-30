@@ -1,37 +1,45 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "react-native-elements";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { ScrollView } from "react-native";
 import { ListItem } from "react-native-elements";
 import Container from "./Container";
-import Heading from "./Heading";
+import api from "../api";
 
-const list = [
-  {
-    name: "Amy Farha",
-    avatar_url:
-      "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg",
-    subtitle: "Vice President"
-  },
-  {
-    name: "Chris Jackson",
-    avatar_url:
-      "https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg",
-    subtitle: "Vice Chairman"
-  }
-];
+const Favorites = ({ favoriteIds }) => {
+  const [favorites, setFavorites] = useState([]);
 
-export default () => (
-  <View>
-    <Container>
-      {list.map((l, i) => (
-        <ListItem
-          key={i}
-          leftAvatar={{ source: { uri: l.avatar_url } }}
-          title={l.name}
-          subtitle={l.subtitle}
-          bottomDivider
-        />
-      ))}
-    </Container>
-  </View>
-);
+  useEffect(() => {
+    fetchFavorites();
+  }, [favoriteIds]);
+
+  const fetchFavorites = async () => {
+    const requests = favoriteIds.map(id => api.get(`photos/${id}`));
+
+    Promise.all(requests)
+      .then(responses => responses.map(({ data }) => data))
+      .then(favorites => setFavorites(favorites));
+  };
+
+  return (
+    <ScrollView>
+      <Container>
+        {favorites.map(({ description, id, urls, user }) => (
+          <ListItem
+            key={id}
+            leftAvatar={{ source: { uri: urls.regular } }}
+            title={description || "lorem"}
+            subtitle={user.name}
+            bottomDivider
+          />
+        ))}
+      </Container>
+    </ScrollView>
+  );
+};
+
+const mapStateToProps = state => ({
+  favoriteIds: state.favorites
+});
+
+const VisibleTodoList = connect(mapStateToProps, null)(Favorites);
+export default VisibleTodoList;

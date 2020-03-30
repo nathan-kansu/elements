@@ -39,22 +39,18 @@ const Home = ({ addFavorite, removeFavorite, favorites }) => {
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    favorites: state.favorites
-  };
-};
+const mapStateToProps = state => ({
+  favorites: state.favorites
+});
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addFavorite: id => {
-      dispatch(favoriteAdd(id));
-    },
-    removeFavorite: id => {
-      dispatch(favoriteRemove(id));
-    }
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  addFavorite: id => {
+    dispatch(favoriteAdd(id));
+  },
+  removeFavorite: id => {
+    dispatch(favoriteRemove(id));
+  }
+});
 
 const VisibleTodoList = connect(mapStateToProps, mapDispatchToProps)(Home);
 
