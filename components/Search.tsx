@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Image,
   ScrollView,
@@ -6,13 +7,15 @@ import {
   useWindowDimensions,
   View
 } from "react-native";
-import { SearchBar } from "react-native-elements";
-import Container from "./Container";
+import { Button, Icon, SearchBar } from "react-native-elements";
+import { favoriteAdd } from "../store/actions/favorites";
 import api from "../api";
 
 export default () => {
   const [results, setResults] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleChangeText = text => {
     setSearchText(text);
@@ -33,8 +36,18 @@ export default () => {
   };
 
   const tileWidth = getTileWidth();
+  const favorites = useSelector(state => state.favorites);
+
+  const handleFavoriteToggle = id => {
+    dispatch(favoriteAdd(id));
+  };
+
+  const isFavorite = id => favorites.includes(id);
 
   const styles = StyleSheet.create({
+    favorite: {
+      backgroundColor: "transparent"
+    },
     container: {
       flex: 1,
       flexDirection: "row",
@@ -58,13 +71,22 @@ export default () => {
       />
       <ScrollView>
         <View style={styles.container}>
-          {results.map(({ description, id, urls }) => (
+          {results.map(({ id, urls }) => (
             <View key={id}>
               <Image
                 source={{
                   uri: urls.regular
                 }}
                 style={styles.image}
+              />
+              <Button
+                buttonStyle={styles.favorite}
+                onPress={() => handleFavoriteToggle(id)}
+                icon={
+                  <Icon
+                    name={isFavorite(id) ? "favorite" : "favorite-border"}
+                  />
+                }
               />
             </View>
           ))}
