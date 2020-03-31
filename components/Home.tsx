@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { ScrollView, SafeAreaView, View, Text } from "react-native";
+import { ScrollView, SafeAreaView } from "react-native";
 import Tile from "./Tile";
 import { favoriteAdd, favoriteRemove } from "../store/actions/favorites";
 import api from "../api";

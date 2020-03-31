@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import Home from "./Home";
 import Favorites from "./Favorites";
-import Profile from "./Profile";
+import Search from "./Search";
 const Tab = createBottomTabNavigator();
 
 const MyTabs = () => {
@@ -20,8 +20,8 @@ const MyTabs = () => {
 
           if (route.name === "Home") {
             iconName = "ios-home";
-          } else if (route.name === "Profile") {
-            iconName = "ios-contact";
+          } else if (route.name === "Search") {
+            iconName = "ios-search";
           } else if (route.name === "Favorites") {
             iconName = "ios-heart";
           }
@@ -30,9 +30,9 @@ const MyTabs = () => {
         }
       })}
     >
+      <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Favorites" component={Favorites} />
-      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };
